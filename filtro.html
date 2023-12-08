@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -12,13 +12,14 @@
 <body>
 
   <div>
-      <input type="text" placeholder="Seleccioná un color o tipo">
-      <button>Filtrar</button>
+      <label for="input">Selecciona un color o tipo</label><!--Se añadió un label y la indicación ya no solo está en el placeholder-->
+      <input id="input" type="text" placeholder="Seleccioná un color o tipo"><!--Se añadio el id input-->
+      <button id="btn-filtrar">Filtrar</button>
       <h1>Lista de productos </h1>
       <div id="lista-de-productos">
-    </div>
+      </div>
   </div>
-  <script src="../filtro.js"></script>
+  <script src="filtro.js"></script>
 </body>
 
 </html>

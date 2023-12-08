@@ -1,63 +1,51 @@
-// Tenemos un li de productos
-
 const productos = [
   {nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./taco-negro.jpg"},
   {nombre: "Zapato azul", tipo: "zapato", color: "azul", img: "./taco-azul.jpg"},
   {nombre: "Bota negra", tipo: "bota", color: "negro", img: "./bota-negra.jpg"},
   {nombre: "Bota azul", tipo: "bota", color: "azul", img: "./bota-azul.jpg"},
   {nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg"}
-]
+];
 
-const li = document.getElementsByName("lista-de-productos")
-const $i = document.querySelector('.input');
+const listaProductosRef = document.getElementById("lista-de-productos") //Cambiado a ById y un nombre con mas contexto
+const entradaRef = document.getElementById("input");// Se cambio a ById y un nombre con mas contexto
+const btnFiltroRef = document.getElementById("btn-filtrar");//Se cambio a byId y se reacomodo junto a las otras ref
+///////
 
-for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
-  d.classList.add("producto")
-
-  var ti = document.createElement("p")
-  ti.classList.add("titulo")
-  ti.textContent = productos[i].nombre
+//Este for pertenece a diplay
+const displayProductos = (productos) =>{//Se define una funcion que despliega el arreglo que se le pasa
+  for (let i = 0; i < productos.length; i++) {//Correción del nombre de los atributos para crear los elementos html
+    const contenedor = document.createElement("div");
+    contenedor.classList.add("producto");
   
-  var imagen = document.createElement("img");
-  imagen.setAttribute('src', productos[i].img);
-
-  d.appendChild(ti)
-  d.appendChild(imagen)
-
-  li.appendChild(d)
-}
-
-displayProductos(productos)
-const botonDeFiltro = document.querySelector("button");
-
-botonDeFiltro.onclick = function() {
-  while (li.firstChild) {
-    li.removeChild(li.firstChild);
-  }
-
-  const texto = $i.value;
-  console.log(texto);
-  const productosFiltrados = filtrado(productos, texto );
-
-  for (let i = 0; i < productosFiltrados.length; i++) {
-    var d = document.createElement("div")
-    d.classList.add("producto")
-  
-    var ti = document.createElement("p")
-    ti.classList.add("titulo")
-    ti.textContent = productosFiltrados[i].nombre
+    const titulo = document.createElement("p");
+    titulo.classList.add("titulo");
+    titulo.textContent = productos[i].nombre;
     
-    var imagen = document.createElement("img");
-    imagen.setAttribute('src', productosFiltrados[i].img);
+    const imagen = document.createElement("img");
+    imagen.setAttribute('src', productos[i].img);
   
-    d.appendChild(ti)
-    d.appendChild(imagen)
-  
-    li.appendChild(d)
+    contenedor.appendChild(titulo)
+    contenedor.appendChild(imagen)
+    listaProductosRef.appendChild(contenedor)
   }
+};
+
+displayProductos(productos); //Impresión por default
+
+//Al activar boton filtro
+btnFiltroRef.onclick = function() {
+
+  while (listaProductosRef.firstChild) {//Corrección de nombres para los elementos
+    listaProductosRef.removeChild(listaProductosRef.firstChild);
+  }
+
+  const filtro = entradaRef.value;
+  console.log(filtro);
+  const productosFiltrados = filtrado(productos, filtro);
+  displayProductos(productosFiltrados);//Sustitución del for que imprime por la llamada a la función display productos
 }
 
-const filtrado = (productos = [], texto) => {
-  return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
+//Funcion de filtro
+const filtrado = (productos = [], filtro) => {//Corección en los nombres de las variables
+  return productos.filter(item => item.tipo.includes(filtro) || item.color.includes(filtro));
 }  
